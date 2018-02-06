@@ -45,7 +45,7 @@ def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 	#global sixteen
 	
 	def chooseWinner():
-		print 'Winner winner, chicken dinner!'
+		print ('Winner winner, chicken dinner!')
 		winner = random.randint(0,5)
 		alertWinner(winner)
 
@@ -60,68 +60,70 @@ def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 		global sixteen
 		global seventeen
 		
-		print 'Alerting...'
+		print ('Alerting...')
 		if winner == 0:
-			print 'Lighting 18'
+			print ('Lighting 18')
 			GPIO.output(18, GPIO.HIGH)
 			time.sleep(.5)
 			GPIO.output(18, GPIO.LOW)
 			time.sleep(.5)
 			eighteen = eighteen + 1
 		elif winner == 1:
-			print 'Lighting 24'
+			print ('Lighting 24')
 			GPIO.output(24, GPIO.HIGH)
 			time.sleep(.5)
 			GPIO.output(24, GPIO.LOW)
 			time.sleep(.5)
 			twentyfour = twentyfour + 1
 		elif winner == 2:
-			print 'Lighting 26'
+			print ('Lighting 26')
 			GPIO.output(26, GPIO.HIGH)
 			time.sleep(.5)
 			GPIO.output(26, GPIO.LOW)
 			time.sleep(.5)
 			twentysix = twentysix + 1
 		elif winner == 3:
-			print 'Lighting 16'
+			print ('Lighting 16')
 			GPIO.output(16, GPIO.HIGH)
 			time.sleep(.5)
 			GPIO.output(16, GPIO.LOW)
 			time.sleep(.5)
 			sixteen = sixteen + 1
 		elif winner == 4:
-			print 'Lighting 4'
+			print ('Lighting 4')
 			GPIO.output(4, GPIO.HIGH)
 			time.sleep(.5)
 			GPIO.output(4, GPIO.LOW)
 			time.sleep(.5)
 			four = four + 1
 		else:
-			print 'Lighting 17'
+			print ('Lighting 17')
 			GPIO.output(17, GPIO.HIGH)
 			time.sleep(.5)
 			GPIO.output(17, GPIO.LOW)
 			time.sleep(.5)
 			seventeen = seventeen + 1
 			
-		print 'Alerted'
+		print ('Alerted')
 		x = x - 1
 	chooseWinner()
 
 	while x != 0:
 		chooseWinner()
 
-def displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
-	print 'FOUR: ', four
-	print 'TWENTYSIX: ', twentysix 
-	print 'SIXTEEN: ', sixteen
-	print 'EIGHTEEN: ', eighteen
-	print 'TWENTYFOUR: ', twentyfour
-	print 'SEVENTEEN: ', seventeen
-	print 'Thanks for playing!'
-
 main(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
-displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
+
+def displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
+	print ('FOUR: ', four)
+	print ('TWENTYSIX: ', twentysix)
+	print ('SIXTEEN: ', sixteen)
+	print ('EIGHTEEN: ', eighteen)
+	print ('TWENTYFOUR: ', twentyfour)
+	print ('SEVENTEEN: ', seventeen)
+	print ('Thanks for playing!')
+
+# main(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
+# displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
 
 
 
