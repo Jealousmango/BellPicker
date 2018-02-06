@@ -11,7 +11,7 @@ GPIO.setup(16, GPIO.OUT)
 GPIO.setup(4, GPIO.OUT)
 GPIO.setup(17, GPIO.OUT)
 
-print 'How many loops: '
+print ('How many loops: ')
 GPIO.output(24, GPIO.HIGH)
 GPIO.output(18, GPIO.HIGH)
 GPIO.output(26, GPIO.HIGH)
@@ -122,8 +122,7 @@ def displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 	print ('SEVENTEEN: ', seventeen)
 	print ('Thanks for playing!')
 
-# main(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
-# displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
+displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
 
 
 
