@@ -5,7 +5,7 @@ from pad4pi import rpi_gpio
 
 KEYPAD = [1, 2, 3, 4]
 
-ROW_PINS = []
+ROW_PINS = [21, 12, 25, 6, 5]
 factory = rpi_gpio.KeypadFactory()
 
 keypad = factory.create_keypad(keypad = KEYPAD, row_pins = ROW_PINS)
@@ -149,6 +149,7 @@ def displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 	print ('Thanks for playing!')
 
 displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
+keypad.cleanup()
 
 
 
