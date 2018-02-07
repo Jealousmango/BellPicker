@@ -1,6 +1,27 @@
 import RPi.GPIO as GPIO
 import time
 import random
+from pad4pi import rpi_gpio
+
+KEYPAD = [1, 2, 3, 4]
+
+ROW_PINS = []
+factory = rpi_gpio.KeypadFactory()
+
+keypad = factory.create_keypad(keypad = KEYPAD, row_pins = ROW_PINS)
+
+keypad.registerKeyPressHandler(processKey)
+
+def processKey(key):
+	if (key == "1"):
+		print("number")
+	elif (key == "2"):
+		print("number")
+	elif (key == "3"):
+		print("number")
+	elif (key == "4"):
+		print("number")
+
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -19,7 +40,7 @@ GPIO.output(16, GPIO.HIGH)
 GPIO.output(4, GPIO.HIGH)
 GPIO.output(17, GPIO.HIGH)
 x = input()
-winner = 0
+winnerIndex = 0
 
 four = 0
 eighteen = 0
@@ -27,6 +48,7 @@ twentyfour = 0
 twentysix = 0
 sixteen = 0
 seventeen = 0
+contestants = []
 
 def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 	
@@ -43,13 +65,17 @@ def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 	#global twentyfour
 	#global twentysix
 	#global sixteen
-	
-	def chooseWinner():
-		print ('Winner winner, chicken dinner!')
-		winner = random.randint(0,5)
-		alertWinner(winner)
 
-	
+
+	def prepareWinner(winner):
+	 #    winner index logic here
+
+	def chooseWinner():
+		print('Winner winner, chicken dinner!')
+		winner = random.randint(0, 5)
+		prepareWinner(winner)
+		# alertWinner(winner)
+
 	def alertWinner(winner):
 		global x
 		#global winner
