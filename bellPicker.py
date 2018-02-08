@@ -10,8 +10,6 @@ factory = rpi_gpio.KeypadFactory()
 
 keypad = factory.create_keypad(keypad = KEYPAD, row_pins = ROW_PINS)
 
-keypad.registerKeyPressHandler(processKey)
-
 def processKey(key):
 	if (key == "1"):
 		print("number")
@@ -21,6 +19,14 @@ def processKey(key):
 		print("number")
 	elif (key == "4"):
 		print("number")
+		
+keypad.registerKeyPressHandler(processKey)
+
+GPIO.setup(21, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT)
+GPIO.setup(25, GPIO.OUT)
+GPIO.setup(6, GPIO.OUT)
+GPIO.setup(5, GPIO.IN)
 
 
 GPIO.setmode(GPIO.BCM)
@@ -68,13 +74,13 @@ def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 
 
 	def prepareWinner(winner):
-	 #    winner index logic here
-
+		print("Hello")
+		
 	def chooseWinner():
 		print('Winner winner, chicken dinner!')
 		winner = random.randint(0, 5)
-		prepareWinner(winner)
-		# alertWinner(winner)
+		# prepareWinner(winner)
+		alertWinner(winner)
 
 	def alertWinner(winner):
 		global x
@@ -150,6 +156,7 @@ def displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 
 displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
 keypad.cleanup()
+GPIO.cleanup()
 
 
 
