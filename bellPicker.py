@@ -1,69 +1,48 @@
 import RPi.GPIO as GPIO
 import time
 import random
-from pad4pi import rpi_gpio
-
-KEYPAD = [1, 2, 3, 4]
-
-ROW_PINS = [21, 12, 25, 6, 5]
-factory = rpi_gpio.KeypadFactory()
-
-keypad = factory.create_keypad(keypad = KEYPAD, row_pins = ROW_PINS)
-
-def processKey(key):
-	if (key == "1"):
-		print("number")
-	elif (key == "2"):
-		print("number")
-	elif (key == "3"):
-		print("number")
-	elif (key == "4"):
-		print("number")
-		
-keypad.registerKeyPressHandler(processKey)
-
-GPIO.setup(21, GPIO.OUT)
-GPIO.setup(12, GPIO.OUT)
-GPIO.setup(25, GPIO.OUT)
-GPIO.setup(6, GPIO.OUT)
-GPIO.setup(5, GPIO.IN)
-
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
+
+GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
+
+GPIO.setup(12, GPIO.OUT)
+GPIO.setup(25, GPIO.OUT)
 GPIO.setup(18, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
-GPIO.setup(16, GPIO.OUT)
-GPIO.setup(4, GPIO.OUT)
-GPIO.setup(17, GPIO.OUT)
+GPIO.setup(27, GPIO.OUT)
 
 print ('How many loops: ')
-GPIO.output(24, GPIO.HIGH)
+GPIO.output(12, GPIO.HIGH)
 GPIO.output(18, GPIO.HIGH)
+GPIO.output(24, GPIO.HIGH)
+GPIO.output(25, GPIO.HIGH)
 GPIO.output(26, GPIO.HIGH)
-GPIO.output(16, GPIO.HIGH)
-GPIO.output(4, GPIO.HIGH)
-GPIO.output(17, GPIO.HIGH)
+GPIO.output(27, GPIO.HIGH)
+
 x = input()
 winnerIndex = 0
 
-four = 0
+twentyfive = 0
 eighteen = 0
 twentyfour = 0
 twentysix = 0
-sixteen = 0
-seventeen = 0
+twelve = 0
+twentyseven = 0
 contestants = []
+def turnOffLeds():
+		GPIO.output(24, GPIO.LOW)
+		GPIO.output(18, GPIO.LOW)
+		GPIO.output(26, GPIO.LOW)
+		GPIO.output(12, GPIO.LOW)
+		GPIO.output(27, GPIO.LOW)
+		GPIO.output(25, GPIO.LOW)
 
-def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
-	
-	GPIO.output(24, GPIO.LOW)
-	GPIO.output(18, GPIO.LOW)
-	GPIO.output(26, GPIO.LOW)
-	GPIO.output(16, GPIO.LOW)
-	GPIO.output(4, GPIO.LOW)
-	GPIO.output(17, GPIO.LOW)
+turnOffLeds()
+
+def main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven):
 	
 	#global winner
 	#global four
@@ -71,7 +50,6 @@ def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 	#global twentyfour
 	#global twentysix
 	#global sixteen
-
 
 	def prepareWinner(winner):
 		print("Hello")
@@ -85,12 +63,12 @@ def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 	def alertWinner(winner):
 		global x
 		#global winner
-		global four
 		global eighteen
 		global twentyfour
 		global twentysix
-		global sixteen
-		global seventeen
+		global twelve
+		global twentyfive
+		global twentyseven
 		
 		print ('Alerting...')
 		if winner == 0:
@@ -115,26 +93,26 @@ def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 			time.sleep(.5)
 			twentysix = twentysix + 1
 		elif winner == 3:
-			print ('Lighting 16')
-			GPIO.output(16, GPIO.HIGH)
+			print ('Lighting 12')
+			GPIO.output(12, GPIO.HIGH)
 			time.sleep(.5)
-			GPIO.output(16, GPIO.LOW)
+			GPIO.output(12, GPIO.LOW)
 			time.sleep(.5)
-			sixteen = sixteen + 1
+			twelve = twelve + 1
 		elif winner == 4:
-			print ('Lighting 4')
-			GPIO.output(4, GPIO.HIGH)
+			print ('Lighting 25')
+			GPIO.output(25, GPIO.HIGH)
 			time.sleep(.5)
-			GPIO.output(4, GPIO.LOW)
+			GPIO.output(25, GPIO.LOW)
 			time.sleep(.5)
-			four = four + 1
+			twentyfive = twentyfive + 1
 		else:
-			print ('Lighting 17')
-			GPIO.output(17, GPIO.HIGH)
+			print ('Lighting 27')
+			GPIO.output(27, GPIO.HIGH)
 			time.sleep(.5)
-			GPIO.output(17, GPIO.LOW)
+			GPIO.output(27, GPIO.LOW)
 			time.sleep(.5)
-			seventeen = seventeen + 1
+			twentyseven = twentyseven + 1
 			
 		print ('Alerted')
 		x = x - 1
@@ -143,19 +121,20 @@ def main(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
 	while x != 0:
 		chooseWinner()
 
-main(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
+main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
 
-def displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen):
-	print ('FOUR: ', four)
+def displayWinner(four, eighteen, twentyfour, twentysix, twelve, seventeen):
+	print ('TWENTYFIVE: ', twentyfive)
 	print ('TWENTYSIX: ', twentysix)
-	print ('SIXTEEN: ', sixteen)
+	print ('TWELVE: ', twelve)
 	print ('EIGHTEEN: ', eighteen)
 	print ('TWENTYFOUR: ', twentyfour)
-	print ('SEVENTEEN: ', seventeen)
+	print ('TWENTYSEVEN: ', twentyseven)
 	print ('Thanks for playing!')
 
-displayWinner(four, eighteen, twentyfour, twentysix, sixteen, seventeen)
-keypad.cleanup()
+		
+displayWinner(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
+turnOffLeds()
 GPIO.cleanup()
 
 
