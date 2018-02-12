@@ -121,7 +121,7 @@ def main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven):
 	while x != 0:
 		chooseWinner()
 
-main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
+# main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
 
 def displayWinner(four, eighteen, twentyfour, twentysix, twelve, seventeen):
 	print ('TWENTYFIVE: ', twentyfive)
@@ -136,6 +136,27 @@ def displayWinner(four, eighteen, twentyfour, twentysix, twelve, seventeen):
 displayWinner(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
 turnOffLeds()
 GPIO.cleanup()
+
+while True:
+	input_state = GPIO.input(4)
+	if input_state == False:
+		print('Button is pressed')
+		GPIO.output(12, GPIO.HIGH)
+		GPIO.output(18, GPIO.HIGH)
+		GPIO.output(24, GPIO.HIGH)
+		GPIO.output(25, GPIO.HIGH)
+		GPIO.output(26, GPIO.HIGH)
+		GPIO.output(27, GPIO.HIGH)
+		time.sleep(0.2)
+		main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
+		
+	else:
+		GPIO.output(18, GPIO.LOW)
+		GPIO.output(26, GPIO.LOW)
+		GPIO.output(24, GPIO.LOW)
+		GPIO.output(12, GPIO.LOW)
+		GPIO.output(27, GPIO.LOW)
+		GPIO.output(25, GPIO.LOW)
 
 
 
