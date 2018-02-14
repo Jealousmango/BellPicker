@@ -31,7 +31,7 @@ twentyfour = 0
 twentysix = 0
 twelve = 0
 twentyseven = 0
-contestants = []
+contestants = [0, 1, 2, 3, 4, 5]
 
 def turnOffLeds():
 		GPIO.output(24, GPIO.LOW)
@@ -52,15 +52,20 @@ def main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven):
 	#global sixteen
 	
 	turnOffLeds()
-	
-	def prepareWinner(winner):
-		print("Hello")
 		
 	def chooseWinner():
 		print('Winner winner, chicken dinner!')
 		winner = random.randint(0, 5)
+		winner = contestants[winner]
 		# prepareWinner(winner)
 		alertWinner(winner)
+
+	def prepareWinner(winner):
+		# Roll a random number to move away from selected index.
+		stepsFromIndex = random.randint(10, 20)
+		# Loop through the array until stepsFromIndex is at 0
+		
+		
 
 	def alertWinner(winner):
 		global x
