@@ -54,6 +54,7 @@ def main():
 			if input_state == False:
 			print('Button is pressed')
 			main()
+			time.sleep(10)
 			end = True
 		else:
 			GPIO.output(18, GPIO.LOW)
@@ -63,7 +64,7 @@ def main():
 			GPIO.output(27, GPIO.LOW)
 			GPIO.output(25, GPIO.LOW)
 
-turnOffLeds()
+main()
 GPIO.cleanup()
 
 
