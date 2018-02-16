@@ -14,23 +14,14 @@ GPIO.setup(24, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 GPIO.setup(27, GPIO.OUT)
 
-print ('How many loops: ')
-GPIO.output(12, GPIO.HIGH)
-GPIO.output(18, GPIO.HIGH)
-GPIO.output(24, GPIO.HIGH)
-GPIO.output(25, GPIO.HIGH)
-GPIO.output(26, GPIO.HIGH)
-GPIO.output(27, GPIO.HIGH)
+# GPIO.output(12, GPIO.HIGH)
+# GPIO.output(18, GPIO.HIGH)
+# GPIO.output(24, GPIO.HIGH)
+# GPIO.output(25, GPIO.HIGH)
+# GPIO.output(26, GPIO.HIGH)
+# GPIO.output(27, GPIO.HIGH)
 
-x = input()
-
-twentyfive = 0
-eighteen = 0
-twentyfour = 0
-twentysix = 0
-twelve = 0
-twentyseven = 0
-contestants = [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5]
+contestants =[12, 18, 24, 25, 26, 27]
 
 def turnOffLeds():
 		GPIO.output(24, GPIO.LOW)
@@ -40,40 +31,59 @@ def turnOffLeds():
 		GPIO.output(27, GPIO.LOW)
 		GPIO.output(25, GPIO.LOW)
 
-
-def main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven):
-	
-	#global winner
-	#global four
-	#global eighteen
-	#global twentyfour
-	#global twentysix
-	#global sixteen
-	
+def main():
 	turnOffLeds()
-		
+
 	def chooseWinner():
 		print('Winner winner, chicken dinner!')
-		winner = random.randint(0, 5)
-		winner = contestants[winner]
-		distanceToWinner = random.randint(10, 20)
+		timeToWait = .5
+		distanceToWinner = random.randint(0, len(contestants))
+		for x in range(0, displayWinner):
+			GPIO.output(contestants[x], GPIO.HIGH)
+			time.sleep(timeToWait)
+			if (x == displayWinner):
+				winner = contestants[displayWinner]
+				print("Winner is: ", winner)
+				return(winner)
+			else:
+				timeToWait = timeToWait * 2
+				GPIO.output(contestants[x], GPIO.LOW)
+	end = False
+	while end != True :
+		input_state = GPIO.input(4)
+			if input_state == False:
+			print('Button is pressed')
+			main()
+			end = True
+		else:
+			GPIO.output(18, GPIO.LOW)
+			GPIO.output(26, GPIO.LOW)
+			GPIO.output(24, GPIO.LOW)
+			GPIO.output(12, GPIO.LOW)
+			GPIO.output(27, GPIO.LOW)
+			GPIO.output(25, GPIO.LOW)
+
+turnOffLeds()
+GPIO.cleanup()
+
+
 		# prepareWinner(winner)
 		# Loop through array until distanceToWinner reaches zero, indicating the final winner.
-		while distanceToWinner > 0:
-			lightUpIndex(distanceToWinner, winner)
-			distanceToWinner = distanceToWinner - 1
+		# while distanceToWinner > 0:
+		# 	lightUpIndex(distanceToWinner, winner)
+		# 	distanceToWinner = distanceToWinner - 1
 
-		GPIO.output(contestants[distanceToWinner], GPIO.HIGH)
+		# GPIO.output(contestants[distanceToWinner], GPIO.HIGH)
 		# alertWinner(winner)
-		print("Winner: ", contestants[displayWinner])
+	# 	print("Winner: ", contestants[displayWinner])
 
-	def lightUpIndex(distanceToWinner, winner):
-		timeToWait = .5
-		GPIO.output(contestants[distanceToWinner], GPIO.HIGH)
-		time.sleep(timeToWait)
-		GPIO.output(contestants[distanceToWinner], GPIO.LOW)
-		timeToWait = timeToWait * 2
-		return(distanceToWinner, winner)
+	# def lightUpIndex(distanceToWinner, winner):
+	# 	timeToWait = .5
+	# 	GPIO.output(contestants[distanceToWinner], GPIO.HIGH)
+	# 	time.sleep(timeToWait)
+	# 	GPIO.output(contestants[distanceToWinner], GPIO.LOW)
+	# 	timeToWait = timeToWait * 2
+	# 	return(distanceToWinner, winner)
 	
 
 	# def prepareWinner(winner):
@@ -146,36 +156,36 @@ def main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven):
 
 # main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
 
-def displayWinner(four, eighteen, twentyfour, twentysix, twelve, seventeen):
-	print ('TWENTYFIVE: ', twentyfive)
-	print ('TWENTYSIX: ', twentysix)
-	print ('TWELVE: ', twelve)
-	print ('EIGHTEEN: ', eighteen)
-	print ('TWENTYFOUR: ', twentyfour)
-	print ('TWENTYSEVEN: ', twentyseven)
-	print ('Thanks for playing!')
+# def displayWinner(four, eighteen, twentyfour, twentysix, twelve, seventeen):
+# 	print ('TWENTYFIVE: ', twentyfive)
+# 	print ('TWENTYSIX: ', twentysix)
+# 	print ('TWELVE: ', twelve)
+# 	print ('EIGHTEEN: ', eighteen)
+# 	print ('TWENTYFOUR: ', twentyfour)
+# 	print ('TWENTYSEVEN: ', twentyseven)
+# 	print ('Thanks for playing!')
 
-while x > 0:
-	input_state = GPIO.input(4)
-	if input_state == False:
-		print('Button is pressed')
-		#GPIO.output(12, GPIO.HIGH)
-		#GPIO.output(18, GPIO.HIGH)
-		#GPIO.output(24, GPIO.HIGH)
-		#GPIO.output(25, GPIO.HIGH)
-		#GPIO.output(26, GPIO.HIGH)
-		#GPIO.output(27, GPIO.HIGH)
-		#ime.sleep(0.2)
-		main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
-	else:
-		GPIO.output(18, GPIO.LOW)
-		GPIO.output(26, GPIO.LOW)
-		GPIO.output(24, GPIO.LOW)
-		GPIO.output(12, GPIO.LOW)
-		GPIO.output(27, GPIO.LOW)
-		GPIO.output(25, GPIO.LOW)
+# while x > 0:
+# 	input_state = GPIO.input(4)
+# 	if input_state == False:
+# 		print('Button is pressed')
+# 		#GPIO.output(12, GPIO.HIGH)
+# 		#GPIO.output(18, GPIO.HIGH)
+# 		#GPIO.output(24, GPIO.HIGH)
+# 		#GPIO.output(25, GPIO.HIGH)
+# 		#GPIO.output(26, GPIO.HIGH)
+# 		#GPIO.output(27, GPIO.HIGH)
+# 		#ime.sleep(0.2)
+# 		main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
+# 	else:
+# 		GPIO.output(18, GPIO.LOW)
+# 		GPIO.output(26, GPIO.LOW)
+# 		GPIO.output(24, GPIO.LOW)
+# 		GPIO.output(12, GPIO.LOW)
+# 		GPIO.output(27, GPIO.LOW)
+# 		GPIO.output(25, GPIO.LOW)
 
-# displayWinner(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
-turnOffLeds()
-GPIO.cleanup()
+# # displayWinner(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
+# turnOffLeds()
+# GPIO.cleanup()
 
