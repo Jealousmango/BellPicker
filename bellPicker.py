@@ -20,7 +20,7 @@ GPIO.setup(27, GPIO.OUT)
 # GPIO.output(25, GPIO.HIGH)
 # GPIO.output(26, GPIO.HIGH)
 # GPIO.output(27, GPIO.HIGH)
-
+end = False
 contestants =[12, 18, 24, 25, 26, 27]
 
 def turnOffLeds():
@@ -33,39 +33,42 @@ def turnOffLeds():
 
 def main():
 	turnOffLeds()
+	chooseWinner()
 
-	def chooseWinner():
-		print('Winner winner, chicken dinner!')
-		timeToWait = .5
-		distanceToWinner = random.randint(0, len(contestants))
-		for x in range(0, displayWinner):
-			GPIO.output(contestants[x], GPIO.HIGH)
-			time.sleep(timeToWait)
-			if (x == displayWinner):
-				winner = contestants[displayWinner]
-				print("Winner is: ", winner)
-				return(winner)
-			else:
-				timeToWait = timeToWait * 2
-				GPIO.output(contestants[x], GPIO.LOW)
-	end = False
-	while end != True :
-		input_state = GPIO.input(4)
-			if input_state == False:
-			print('Button is pressed')
-			main()
-			time.sleep(10)
-			end = True
+def chooseWinner():
+	print('Winner winner, chicken dinner!')
+	timeToWait = .5
+	distanceToWinner = random.randint(0, len(contestants))
+	for x in range(0, distanceToWinner):
+		GPIO.output(contestants[x], GPIO.HIGH)
+		time.sleep(timeToWait)
+		if (x == distanceToWinner):
+			winner = contestants[distanceToWinner]
+			print("Winner is: ", winner)
+			return(winner)
 		else:
-			GPIO.output(18, GPIO.LOW)
-			GPIO.output(26, GPIO.LOW)
-			GPIO.output(24, GPIO.LOW)
-			GPIO.output(12, GPIO.LOW)
-			GPIO.output(27, GPIO.LOW)
-			GPIO.output(25, GPIO.LOW)
+			timeToWait = timeToWait * 2
+			GPIO.output(contestants[x], GPIO.LOW)
+	
+while end != True :
+	input_state = GPIO.input(4)
+	if input_state == False:
+		print('Button is pressed')
+		main()
+		time.sleep(10)
+		print("Napping for 10 seconds while winner is lit.")
+		end = True
+	else:
+		GPIO.output(18, GPIO.LOW)
+		GPIO.output(26, GPIO.LOW)
+		GPIO.output(24, GPIO.LOW)
+		GPIO.output(12, GPIO.LOW)
+		GPIO.output(27, GPIO.LOW)
+		GPIO.output(25, GPIO.LOW)
+# main()
 
-main()
 GPIO.cleanup()
+print("Jobs done!")
 
 
 		# prepareWinner(winner)
