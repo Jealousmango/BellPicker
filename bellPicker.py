@@ -13,16 +13,10 @@ GPIO.setup(18, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 GPIO.setup(27, GPIO.OUT)
-
-# GPIO.output(12, GPIO.HIGH)
-# GPIO.output(18, GPIO.HIGH)
-# GPIO.output(24, GPIO.HIGH)
-# GPIO.output(25, GPIO.HIGH)
-# GPIO.output(26, GPIO.HIGH)
-# GPIO.output(27, GPIO.HIGH)
+# Bool to let the program know when to end.
 end = False
+# Hold all GPIO pins used in a list.
 contestants =[12, 18, 24, 25, 26, 27]
-winner = None
 
 def main():
 	turnOffLeds()
@@ -37,29 +31,40 @@ def turnOffLeds():
 		GPIO.output(25, GPIO.LOW)
 
 def chooseWinner():
-	print('Winner winner, chicken dinner!')
+	print('Choosing winner...')
+	# Amount of time to sleep between LEDs.
 	timeToWait = .5
-	distanceToWinner = random.randint(0, len(contestants))
-	print("distanceToWinner rolled: ", distanceToWinner)
-	for x in range(0, distanceToWinner):
+	# Capture the index that "wins"
+	winningIndex = random.randint(0, len(contestants) - 1)
+	print("winningIndex is: ", winningIndex)
+	# Save the value of the winning index and then remove it from the list.
+	winner = contestants[winningIndex]
+	contestants.remove(winner)
+	# Loop through remaining "losers".
+	for x in range(0, len(contestants)):
+		# Light each losing pin.
 		GPIO.output(contestants[x], GPIO.HIGH)
+		print("Lighting index: ", contestants[x])
 		time.sleep(timeToWait)
-		if (x == distanceToWinner):
-			winner = contestants[distanceToWinner]
-			print("Winner is: ", winner)
-		else:
-			timeToWait = timeToWait * 1.25
-			GPIO.output(contestants[x], GPIO.LOW)
-	return
+		# Turn off losing pin to prepare for the next pin to be lit.
+		GPIO.output(contestants[x], GPIO.LOW)
+		# Increase the amount of time to wait between pins.
+		timeToWait = timeToWait * 1.3
+	# Light up the winning pin.
+	GPIO.output(winner, GPIO.HIGH)
+	print("Winner is: ", winner)
 	
 while end != True :
+	# Listen for button press.
 	input_state = GPIO.input(4)
 	if input_state == False:
-		print('Button is pressed')
+		print("Button has been pressed.")
 		main()
+		print("5 second nap")
 		time.sleep(5)
-		print("Napping for 5 seconds while winner is lit.")
 		end = True
+		# Shut it down.
+		turnOffLeds()
 	else:
 		GPIO.output(18, GPIO.LOW)
 		GPIO.output(26, GPIO.LOW)
@@ -67,132 +72,6 @@ while end != True :
 		GPIO.output(12, GPIO.LOW)
 		GPIO.output(27, GPIO.LOW)
 		GPIO.output(25, GPIO.LOW)
-# main()
-turnOffLeds()
-GPIO.cleanup()
-print("Winner is: ", winner)
-print("Jobs done!")
 
-
-		# prepareWinner(winner)
-		# Loop through array until distanceToWinner reaches zero, indicating the final winner.
-		# while distanceToWinner > 0:
-		# 	lightUpIndex(distanceToWinner, winner)
-		# 	distanceToWinner = distanceToWinner - 1
-
-		# GPIO.output(contestants[distanceToWinner], GPIO.HIGH)
-		# alertWinner(winner)
-	# 	print("Winner: ", contestants[displayWinner])
-
-	# def lightUpIndex(distanceToWinner, winner):
-	# 	timeToWait = .5
-	# 	GPIO.output(contestants[distanceToWinner], GPIO.HIGH)
-	# 	time.sleep(timeToWait)
-	# 	GPIO.output(contestants[distanceToWinner], GPIO.LOW)
-	# 	timeToWait = timeToWait * 2
-	# 	return(distanceToWinner, winner)
-	
-
-	# def prepareWinner(winner):
-		# Roll a random number to move away from selected index.
-		# stepsFromIndex = random.randint(10, 20)
-		# Loop through the array until stepsFromIndex is at 0
-		
-		
-
-	# def alertWinner(winner):
-	# 	global x
-	# 	#global winner
-	# 	global eighteen
-	# 	global twentyfour
-	# 	global twentysix
-	# 	global twelve
-	# 	global twentyfive
-	# 	global twentyseven
-		
-	# 	print ('Alerting...')
-	# 	if winner == 0:
-	# 		print ('Lighting 18')
-	# 		GPIO.output(18, GPIO.HIGH)
-	# 		time.sleep(.5)
-	# 		GPIO.output(18, GPIO.LOW)
-	# 		time.sleep(.5)
-	# 		eighteen = eighteen + 1
-	# 	elif winner == 1:
-	# 		print ('Lighting 24')
-	# 		GPIO.output(24, GPIO.HIGH)
-	# 		time.sleep(.5)
-	# 		GPIO.output(24, GPIO.LOW)
-	# 		time.sleep(.5)
-	# 		twentyfour = twentyfour + 1
-	# 	elif winner == 2:
-	# 		print ('Lighting 26')
-	# 		GPIO.output(26, GPIO.HIGH)
-	# 		time.sleep(.5)
-	# 		GPIO.output(26, GPIO.LOW)
-	# 		time.sleep(.5)
-	# 		twentysix = twentysix + 1
-	# 	elif winner == 3:
-	# 		print ('Lighting 12')
-	# 		GPIO.output(12, GPIO.HIGH)
-	# 		time.sleep(.5)
-	# 		GPIO.output(12, GPIO.LOW)
-	# 		time.sleep(.5)
-	# 		twelve = twelve + 1
-	# 	elif winner == 4:
-	# 		print ('Lighting 25')
-	# 		GPIO.output(25, GPIO.HIGH)
-	# 		time.sleep(.5)
-	# 		GPIO.output(25, GPIO.LOW)
-	# 		time.sleep(.5)
-	# 		twentyfive = twentyfive + 1
-	# 	else:
-	# 		print ('Lighting 27')
-	# 		GPIO.output(27, GPIO.HIGH)
-	# 		time.sleep(.5)
-	# 		GPIO.output(27, GPIO.LOW)
-	# 		time.sleep(.5)
-	# 		twentyseven = twentyseven + 1
-			
-	# 	print ('Alerted')
-	# 	x = x - 1
-	# chooseWinner()
-
-	# while x != 0:
-	# 	chooseWinner()
-
-# main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
-
-# def displayWinner(four, eighteen, twentyfour, twentysix, twelve, seventeen):
-# 	print ('TWENTYFIVE: ', twentyfive)
-# 	print ('TWENTYSIX: ', twentysix)
-# 	print ('TWELVE: ', twelve)
-# 	print ('EIGHTEEN: ', eighteen)
-# 	print ('TWENTYFOUR: ', twentyfour)
-# 	print ('TWENTYSEVEN: ', twentyseven)
-# 	print ('Thanks for playing!')
-
-# while x > 0:
-# 	input_state = GPIO.input(4)
-# 	if input_state == False:
-# 		print('Button is pressed')
-# 		#GPIO.output(12, GPIO.HIGH)
-# 		#GPIO.output(18, GPIO.HIGH)
-# 		#GPIO.output(24, GPIO.HIGH)
-# 		#GPIO.output(25, GPIO.HIGH)
-# 		#GPIO.output(26, GPIO.HIGH)
-# 		#GPIO.output(27, GPIO.HIGH)
-# 		#ime.sleep(0.2)
-# 		main(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
-# 	else:
-# 		GPIO.output(18, GPIO.LOW)
-# 		GPIO.output(26, GPIO.LOW)
-# 		GPIO.output(24, GPIO.LOW)
-# 		GPIO.output(12, GPIO.LOW)
-# 		GPIO.output(27, GPIO.LOW)
-# 		GPIO.output(25, GPIO.LOW)
-
-# # displayWinner(twentyfive, eighteen, twentyfour, twentysix, twelve, twentyseven)
-# turnOffLeds()
 # GPIO.cleanup()
-
+print("Jobs done!")
