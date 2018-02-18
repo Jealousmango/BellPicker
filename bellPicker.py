@@ -1,6 +1,10 @@
 import RPi.GPIO as GPIO
 import time
 import random
+import re
+import json
+from slackclient import SlackClient
+import config
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -17,6 +21,18 @@ GPIO.setup(27, GPIO.OUT)
 end = False
 # Hold all GPIO pins used in a list.
 contestants =[12, 18, 24, 25, 26, 27]
+
+# Connect slack bot.
+slack_client = SlackClient(config.api_key)
+
+user_list = slack_client.api_call("users.list")
+for user in user_list.get("members"):
+    if user.get("name") == "bottington":
+        slack_user_id = user.get("id")
+        break
+if slack_client.rtm_connect():
+    print ("Connected!")
+    
 
 def main():
 	turnOffLeds()
@@ -49,10 +65,16 @@ def chooseWinner():
 		# Turn off losing pin to prepare for the next pin to be lit.
 		GPIO.output(contestants[x], GPIO.LOW)
 		# Increase the amount of time to wait between pins.
-		timeToWait = timeToWait * 1.3
+		timeToWait = timeToWait * 1.25
 	# Light up the winning pin.
 	GPIO.output(winner, GPIO.HIGH)
 	print("Winner is: ", winner)
+	winningMessage = ("The winner is: ", winner)
+	slack_client.api_call(
+                    "chat.postMessage",
+                    channel = "general",
+                    text = winningMessage,
+                    as_user = True)
 	
 while end != True :
 	# Listen for button press.
