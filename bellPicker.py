@@ -20,12 +20,17 @@ GPIO.setup(27, GPIO.OUT)
 # Bool to let the program know when to end.
 end = False
 # Hold all GPIO pins used in a list.
-contestants =[12, 18, 24, 25, 26, 27]
+contestants = [12, 18, 24, 25, 26, 27]
 
 # Connect slack bot.
 slack_client = SlackClient(config.api_key)
 
 user_list = slack_client.api_call("users.list")
+
+fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0LEJi",
+				"https://giphy.com/gifs/news-atl-down-MTclfCr4tVgis",
+				"https://giphy.com/gifs/cheer-cheering-oxW9IXKWP2Ouk"]
+
 for user in user_list.get("members"):
     if user.get("name") == "bottington":
         slack_user_id = user.get("id")
@@ -69,14 +74,28 @@ def chooseWinner():
 	# Light up the winning pin.
 	GPIO.output(winner, GPIO.HIGH)
 	print("Winner is: ", winner)
-	winningMessage = ("The winner is: ", winner)
+	winningMessage = "The winner is: ", winner
 	slack_client.api_call(
                     "chat.postMessage",
                     channel = "general",
-                    text = winningMessage,
+                    text = "The winner has been selected...",
                     as_user = True)
+    
+	time.sleep(1)
 	
-while end != True :
+	slack_client.api_call(
+                    "chat.postMessage",
+                    channel = "general",
+                    text = winner,
+                    as_user = True)
+	fantasticGifToPost = random.randint(0, len(fantasticGifs))
+	slack_client.api_call(
+                    "chat.postMessage",
+                    channel = "general",
+                    text = fantasticGifs[fantasticGifToPost],
+                    as_user = True)
+# while end != True:	
+while True:
 	# Listen for button press.
 	input_state = GPIO.input(4)
 	if input_state == False:
@@ -84,9 +103,10 @@ while end != True :
 		main()
 		print("5 second nap")
 		time.sleep(5)
-		end = True
+		# end = True
 		# Shut it down.
 		turnOffLeds()
+		contestants = [12, 18, 24, 25, 26, 27]
 	else:
 		GPIO.output(18, GPIO.LOW)
 		GPIO.output(26, GPIO.LOW)
