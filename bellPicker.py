@@ -82,9 +82,9 @@ def chooseWinner():
 	for blinks in range(0, 15):
 		GPIO.output(winner, GPIO.HIGH)
 		print("Blinking!")
-		time.sleep(.5)
+		time.sleep(1)
 		GPIO.output(winner, GPIO.LOW)
-		time.sleep(.5)
+		time.sleep(1)
 	
 	winningMessage = winnerHandle
 	slack_client.api_call(
