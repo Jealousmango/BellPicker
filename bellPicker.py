@@ -79,13 +79,13 @@ def chooseWinner():
 		timeToWait = timeToWait * 1.25
 	# Light up the winning pin.
 	# GPIO.output(winner, GPIO.HIGH)
-	for blinks in range(0, 15):
+	for blinks in range(0, 10):
 		GPIO.output(winner, GPIO.HIGH)
 		print("Blinking!")
 		time.sleep(1)
 		GPIO.output(winner, GPIO.LOW)
 		time.sleep(1)
-	
+	GPIO.output(winner, GPIO.HIGH)
 	winningMessage = winnerHandle
 	slack_client.api_call(
                     "chat.postMessage",
@@ -121,8 +121,8 @@ while True:
 	if input_state == False:
 		print("Button has been pressed.")
 		main()
-		print("5 second nap")
-		time.sleep(15)
+		print("Nap")
+		time.sleep(10)
 		# end = True
 		# Shut it down.
 		turnOffLeds()
