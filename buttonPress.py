@@ -1,12 +1,13 @@
 import RPi.GPIO as GPIO
 import time
 
+# contestants = [12, 18, 24, 25, 26, 27]
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.setup(12, GPIO.OUT)
-GPIO.setup(25, GPIO.OUT)
 GPIO.setup(18, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
+GPIO.setup(25, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 GPIO.setup(27, GPIO.OUT)
 

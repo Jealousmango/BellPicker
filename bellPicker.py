@@ -11,12 +11,13 @@ GPIO.setwarnings(False)
 
 GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
-GPIO.setup(12, GPIO.OUT)
-GPIO.setup(25, GPIO.OUT)
-GPIO.setup(18, GPIO.OUT)
-GPIO.setup(24, GPIO.OUT)
-GPIO.setup(26, GPIO.OUT)
-GPIO.setup(27, GPIO.OUT)
+GPIO.setup(12, GPIO.OUT) # Liz 
+GPIO.setup(18, GPIO.OUT) # Max
+GPIO.setup(24, GPIO.OUT) # Steven
+GPIO.setup(25, GPIO.OUT) # Elise
+GPIO.setup(26, GPIO.OUT) # Ben
+GPIO.setup(27, GPIO.OUT) # Charles
+
 # Bool to let the program know when to end.
 end = False
 # Hold all GPIO pins used in a list.
@@ -30,9 +31,11 @@ user_list = slack_client.api_call("users.list")
 fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0LEJi",
 				"https://giphy.com/gifs/news-atl-down-MTclfCr4tVgis",
 				"https://giphy.com/gifs/cheer-cheering-oxW9IXKWP2Ouk"]
+# Used to ping winner.				
+winnerNames = ["@lizl", "@hubert-j-farnsworth", "@shuggard", "@eddrakee", "@qwerji", "@charles.mitchell"]
 
 for user in user_list.get("members"):
-    if user.get("name") == "bottington":
+    if user.get("name") == "bellman":
         slack_user_id = user.get("id")
         break
 if slack_client.rtm_connect():
@@ -44,12 +47,12 @@ def main():
 	chooseWinner()
 	
 def turnOffLeds():
-		GPIO.output(24, GPIO.LOW)
-		GPIO.output(18, GPIO.LOW)
-		GPIO.output(26, GPIO.LOW)
-		GPIO.output(12, GPIO.LOW)
-		GPIO.output(27, GPIO.LOW)
-		GPIO.output(25, GPIO.LOW)
+	GPIO.output(24, GPIO.LOW)
+	GPIO.output(18, GPIO.LOW)
+	GPIO.output(26, GPIO.LOW)
+	GPIO.output(12, GPIO.LOW)
+	GPIO.output(27, GPIO.LOW)
+	GPIO.output(25, GPIO.LOW)
 
 def chooseWinner():
 	print('Choosing winner...')
@@ -57,6 +60,7 @@ def chooseWinner():
 	timeToWait = .5
 	# Capture the index that "wins"
 	winningIndex = random.randint(0, len(contestants) - 1)
+	winnerHandle = winnerNames[winningIndex]
 	print("winningIndex is: ", winningIndex)
 	# Save the value of the winning index and then remove it from the list.
 	winner = contestants[winningIndex]
@@ -73,11 +77,11 @@ def chooseWinner():
 		timeToWait = timeToWait * 1.25
 	# Light up the winning pin.
 	GPIO.output(winner, GPIO.HIGH)
-	print("Winner is: ", winner)
-	winningMessage = "The winner is: ", winner
+	
+	winningMessage = winnerHandle
 	slack_client.api_call(
                     "chat.postMessage",
-                    channel = "general",
+                    channel = "alert",
                     text = "The winner has been selected...",
                     as_user = True)
     
@@ -85,13 +89,21 @@ def chooseWinner():
 	
 	slack_client.api_call(
                     "chat.postMessage",
-                    channel = "general",
-                    text = winner,
-                    as_user = True)
-	fantasticGifToPost = random.randint(0, len(fantasticGifs))
+                    channel = "alert",
+                    text = winningMessage,
+                    as_user = True,
+                    link_names = True)
+	fantasticGifToPost = random.randint(0, len(fantasticGifs) - 1)
+	
 	slack_client.api_call(
                     "chat.postMessage",
-                    channel = "general",
+                    channel = "alert",
+                    text = "You must answer the call of duty!",
+                    as_user = True)
+	
+	slack_client.api_call(
+                    "chat.postMessage",
+                    channel = "alert",
                     text = fantasticGifs[fantasticGifToPost],
                     as_user = True)
 # while end != True:	

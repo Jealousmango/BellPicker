@@ -5,7 +5,7 @@ import psutil
 from slackclient import SlackClient
 import config
 
-slack_client = SlackClient(config.api_key)
+slack_client = SlackClient(config.api_key_bottington)
 
 user_list = slack_client.api_call("users.list")
 for user in user_list.get("members"):
@@ -14,6 +14,13 @@ for user in user_list.get("members"):
         break
 if slack_client.rtm_connect():
     print ("Connected!")
+    
+slack_client.api_call(
+                    "chat.postMessage",
+                    channel = "general",
+                    text = "@krysco",
+                    as_user = True,
+                    link_names = True)
 
 while True:
     for message in slack_client.rtm_read():
