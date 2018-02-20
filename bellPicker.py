@@ -11,12 +11,12 @@ GPIO.setwarnings(False)
 
 GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
-GPIO.setup(12, GPIO.OUT) # Liz 
-GPIO.setup(18, GPIO.OUT) # Max
-GPIO.setup(24, GPIO.OUT) # Steven
-GPIO.setup(25, GPIO.OUT) # Elise
-GPIO.setup(26, GPIO.OUT) # Ben
-GPIO.setup(27, GPIO.OUT) # Charles
+GPIO.setup(12, GPIO.OUT) # White 
+GPIO.setup(18, GPIO.OUT) # Blue
+GPIO.setup(24, GPIO.OUT) # Green
+GPIO.setup(25, GPIO.OUT) # Red
+GPIO.setup(26, GPIO.OUT) # Orange
+GPIO.setup(27, GPIO.OUT) # Pink
 
 # Bool to let the program know when to end.
 end = False
@@ -34,7 +34,7 @@ fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0L
 				"https://giphy.com/gifs/studiosoriginals-domitille-collardey-l41Yh1olOKd1Tgbw4",
 				"https://giphy.com/gifs/cat-reaction-youtubers-609o8uNjasiJO"]
 # Used to ping winner.				
-winnerNames = ["@lizl", "@hubert-j-farnsworth", "@shuggard", "@eddrakee", "@qwerji", "@charles.mitchell"]
+winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
 
 for user in user_list.get("members"):
     if user.get("name") == "bellman":
@@ -116,7 +116,7 @@ while True:
 		print("Button has been pressed.")
 		main()
 		print("5 second nap")
-		time.sleep(5)
+		time.sleep(15)
 		# end = True
 		# Shut it down.
 		turnOffLeds()
