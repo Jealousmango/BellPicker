@@ -32,7 +32,9 @@ fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0L
 				"https://giphy.com/gifs/news-atl-down-MTclfCr4tVgis",
 				"https://giphy.com/gifs/cheer-cheering-oxW9IXKWP2Ouk",
 				"https://giphy.com/gifs/internet-eoxomXXVL2S0E",
-				"https://giphy.com/gifs/cat-reaction-youtubers-609o8uNjasiJO"]
+				"https://giphy.com/gifs/cat-reaction-youtubers-609o8uNjasiJO",
+				"https://giphy.com/gifs/reactionseditor-come-on-you-got-this-3og0IPMeREHpEV0f60",
+				"https://giphy.com/gifs/heyarnold-nickelodeon-hey-arnold-26Ff4Ci2RNT1H1zb2"]
 # Used to ping winner.				
 winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
 
