@@ -31,7 +31,7 @@ user_list = slack_client.api_call("users.list")
 fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0LEJi",
 				"https://giphy.com/gifs/news-atl-down-MTclfCr4tVgis",
 				"https://giphy.com/gifs/cheer-cheering-oxW9IXKWP2Ouk",
-				"https://giphy.com/gifs/studiosoriginals-domitille-collardey-l41Yh1olOKd1Tgbw4",
+				"https://giphy.com/gifs/internet-eoxomXXVL2S0E",
 				"https://giphy.com/gifs/cat-reaction-youtubers-609o8uNjasiJO"]
 # Used to ping winner.				
 winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
