@@ -112,7 +112,7 @@ def chooseWinner():
         channel = "alert",
         text = fantasticGifs[fantasticGifToPost],
         as_user = True)
-    
+
 for user in user_list.get("members"):
     if user.get("name") == "bellman":
         slack_user_id = user.get("id")
@@ -131,7 +131,7 @@ if slack_client.rtm_connect():
                 if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
                     slack_client.api_call(
                         "chat.postMessage",
-                        channel="general",
+                        channel="alert",
                         text="Selecting a winner...",
                         as_user=True)
                     main()
