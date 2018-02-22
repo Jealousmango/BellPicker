@@ -42,14 +42,6 @@ fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0L
 # Used to ping winner.
 winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
 
-for user in user_list.get("members"):
-    if user.get("name") == "bellman":
-        slack_user_id = user.get("id")
-        break
-if slack_client.rtm_connect():
-    print ("Connected!")
-
-
 def main():
     turnOffLeds()
     chooseWinner()
@@ -61,24 +53,6 @@ def turnOffLeds():
     GPIO.output(12, GPIO.LOW)
     GPIO.output(27, GPIO.LOW)
     GPIO.output(25, GPIO.LOW)
-
-
-while True:
-    for message in slack_client.rtm_read():
-        if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
-            print("Message received: %s" % json.dumps(message, indent=2))
-            message_text = message['text']. \
-                split("<@%s>" % slack_user_id)[1]. \
-                strip()
-
-            if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
-                slack_client.api_call(
-                    "chat.postMessage",
-                    channel="general",
-                    text="Selecting a winner...",
-                    as_user=True)
-                main()
-
 
 def chooseWinner():
     print('Choosing winner...')
@@ -138,7 +112,29 @@ def chooseWinner():
         channel = "alert",
         text = fantasticGifs[fantasticGifToPost],
         as_user = True)
+    
+for user in user_list.get("members"):
+    if user.get("name") == "bellman":
+        slack_user_id = user.get("id")
+        break
+if slack_client.rtm_connect():
+    print ("Connected!")
 
+    while True:
+        for message in slack_client.rtm_read():
+            if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
+                print("Message received: %s" % json.dumps(message, indent=2))
+                message_text = message['text']. \
+                    split("<@%s>" % slack_user_id)[1]. \
+                    strip()
+
+                if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
+                    slack_client.api_call(
+                        "chat.postMessage",
+                        channel="general",
+                        text="Selecting a winner...",
+                        as_user=True)
+                    main()
 # while end != True:
 while True:
     # Listen for button press.
