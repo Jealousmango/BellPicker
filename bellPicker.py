@@ -134,6 +134,7 @@ if slack_client.rtm_connect():
                         channel="alert",
                         text="Selecting a winner...",
                         as_user=True)
+                    contestants = [12, 18, 24, 25, 26, 27]
                     main()
 # while end != True:
 while True:
