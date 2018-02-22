@@ -53,7 +53,7 @@ def turnOffLeds():
     GPIO.output(12, GPIO.LOW)
     GPIO.output(27, GPIO.LOW)
     GPIO.output(25, GPIO.LOW)
-
+turnOffLeds()
 def chooseWinner():
     print('Choosing winner...')
     # Amount of time to sleep between LEDs.
