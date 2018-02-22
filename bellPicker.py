@@ -78,6 +78,8 @@ def slackHandler():
                         text="Selecting a winner...",
                         as_user=True)
                     main()
+                    
+slackHandler()
 
 def chooseWinner():
     print('Choosing winner...')
