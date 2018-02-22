@@ -11,7 +11,7 @@ GPIO.setwarnings(False)
 
 GPIO.setup(4, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
-GPIO.setup(12, GPIO.OUT) # White 
+GPIO.setup(12, GPIO.OUT) # White
 GPIO.setup(18, GPIO.OUT) # Blue
 GPIO.setup(24, GPIO.OUT) # Green
 GPIO.setup(25, GPIO.OUT) # Red
@@ -35,7 +35,7 @@ fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0L
 				"https://giphy.com/gifs/cat-reaction-youtubers-609o8uNjasiJO",
 				"https://giphy.com/gifs/reactionseditor-come-on-you-got-this-3og0IPMeREHpEV0f60",
 				"https://giphy.com/gifs/heyarnold-nickelodeon-hey-arnold-26Ff4Ci2RNT1H1zb2"]
-# Used to ping winner.				
+# Used to ping winner.
 winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
 
 for user in user_list.get("members"):
@@ -44,12 +44,12 @@ for user in user_list.get("members"):
         break
 if slack_client.rtm_connect():
     print ("Connected!")
-    
+
 
 def main():
 	turnOffLeds()
 	chooseWinner()
-	
+
 def turnOffLeds():
 	GPIO.output(24, GPIO.LOW)
 	GPIO.output(18, GPIO.LOW)
@@ -94,9 +94,9 @@ def chooseWinner():
                     channel = "alert",
                     text = "The winner has been selected...",
                     as_user = True)
-    
+
 	time.sleep(1)
-	
+
 	slack_client.api_call(
                     "chat.postMessage",
                     channel = "alert",
@@ -104,19 +104,36 @@ def chooseWinner():
                     as_user = True,
                     link_names = True)
 	fantasticGifToPost = random.randint(0, len(fantasticGifs) - 1)
-	
+
 	slack_client.api_call(
                     "chat.postMessage",
                     channel = "alert",
                     text = "You must answer the call of duty!",
                     as_user = True)
-	
+
 	slack_client.api_call(
                     "chat.postMessage",
                     channel = "alert",
                     text = fantasticGifs[fantasticGifToPost],
                     as_user = True)
-# while end != True:	
+# Listen for a "ding" message.
+while True:
+    for message in slack_client.rtm_read():
+        if "text" in message and message ["text"].startswith("<@%s>" % slack_user_id):
+            print("Message received: %s" % json.dumps(message, indent = 2))
+            message_text = message['text'].\
+                    split("<@%s>" % slack_user_id)[1].\
+                    strip()
+
+        if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
+            slack_client.api_call(
+                "chat.postMessage",
+                channel = "general",
+                text = "Selecting a winner...",
+                as_user = True)
+			main()
+
+# while end != True:
 while True:
 	# Listen for button press.
 	input_state = GPIO.input(4)
