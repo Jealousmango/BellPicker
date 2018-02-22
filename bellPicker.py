@@ -5,6 +5,10 @@ import re
 import json
 from slackclient import SlackClient
 import config
+import sys
+
+# Prevent python from generating .pyc files.
+sys.dont_write_bytecode = True
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
