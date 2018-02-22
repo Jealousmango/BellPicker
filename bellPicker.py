@@ -62,24 +62,23 @@ def turnOffLeds():
     GPIO.output(27, GPIO.LOW)
     GPIO.output(25, GPIO.LOW)
 
-def slackHandler():
-    while True:
-        for message in slack_client.rtm_read():
-            if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
-                print("Message received: %s" % json.dumps(message, indent=2))
-                message_text = message['text']. \
-                    split("<@%s>" % slack_user_id)[1]. \
-                    strip()
 
-                if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
-                    slack_client.api_call(
-                        "chat.postMessage",
-                        channel="general",
-                        text="Selecting a winner...",
-                        as_user=True)
-                    main()
-                    
-slackHandler()
+while True:
+    for message in slack_client.rtm_read():
+        if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
+            print("Message received: %s" % json.dumps(message, indent=2))
+            message_text = message['text']. \
+                split("<@%s>" % slack_user_id)[1]. \
+                strip()
+
+            if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
+                slack_client.api_call(
+                    "chat.postMessage",
+                    channel="general",
+                    text="Selecting a winner...",
+                    as_user=True)
+                main()
+
 
 def chooseWinner():
     print('Choosing winner...')
