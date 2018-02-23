@@ -40,7 +40,6 @@ def demoMode():
         time.sleep(.5)
         if i == len(contestants):
             i = 0
-        else:
             continue
 
 if mode == "demo":
