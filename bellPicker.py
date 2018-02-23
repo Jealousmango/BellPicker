@@ -83,7 +83,7 @@ def chooseWinner():
     # GPIO.output(winner, GPIO.HIGH)
     for blinks in range(0, 10):
         GPIO.output(winner, GPIO.HIGH)
-        print("Blinking %s", winnerHandle)
+        print("Blinking - ", winnerHandle)
         time.sleep(1)
         GPIO.output(winner, GPIO.LOW)
         time.sleep(1)
