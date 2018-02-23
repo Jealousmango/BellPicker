@@ -23,11 +23,11 @@ GPIO.setup(26, GPIO.OUT) # Orange
 GPIO.setup(27, GPIO.OUT) # Pink
 
 # Bool to let the program know when to end.
-end = False
+# end = False
 # Hold all GPIO pins used in a list.
 contestants = [12, 18, 24, 25, 26, 27]
 
-mode = "demo"
+# mode = "demo"
 
 def turnOffLeds():
     GPIO.output(24, GPIO.LOW)
@@ -72,6 +72,7 @@ winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth"
 def main():
     turnOffLeds()
     chooseWinner()
+    turnOffLeds()
 
 def chooseWinner():
     print('Choosing winner...')
@@ -140,6 +141,25 @@ if slack_client.rtm_connect():
     print ("Connected!")
 
     while True:
+        # Listen for button press.
+        input_state = GPIO.input(4)
+        if input_state == False:
+            print("Button has been pressed.")
+            main()
+            print("Jobs done.")
+            time.sleep(10)
+            # end = True
+            # Shut it down.
+            turnOffLeds()
+            contestants = [12, 18, 24, 25, 26, 27]
+        else:
+            GPIO.output(18, GPIO.LOW)
+            GPIO.output(26, GPIO.LOW)
+            GPIO.output(24, GPIO.LOW)
+            GPIO.output(12, GPIO.LOW)
+            GPIO.output(27, GPIO.LOW)
+            GPIO.output(25, GPIO.LOW)
+
         for message in slack_client.rtm_read():
             if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
                 print("Message received: %s" % json.dumps(message, indent=2))
@@ -155,24 +175,24 @@ if slack_client.rtm_connect():
                         as_user=True)
                     main()
 # while end != True:
-while True:
-    # Listen for button press.
-    input_state = GPIO.input(4)
-    if input_state == False:
-        print("Button has been pressed.")
-        main()
-        print("Jobs done.")
-        time.sleep(10)
-        # end = True
-        # Shut it down.
-        turnOffLeds()
-        contestants = [12, 18, 24, 25, 26, 27]
-    else:
-        GPIO.output(18, GPIO.LOW)
-        GPIO.output(26, GPIO.LOW)
-        GPIO.output(24, GPIO.LOW)
-        GPIO.output(12, GPIO.LOW)
-        GPIO.output(27, GPIO.LOW)
-        GPIO.output(25, GPIO.LOW)
+# while True:
+    # # Listen for button press.
+    # input_state = GPIO.input(4)
+    # if input_state == False:
+    #     print("Button has been pressed.")
+    #     main()
+    #     print("Jobs done.")
+    #     time.sleep(10)
+    #     # end = True
+    #     # Shut it down.
+    #     turnOffLeds()
+    #     contestants = [12, 18, 24, 25, 26, 27]
+    # else:
+    #     GPIO.output(18, GPIO.LOW)
+    #     GPIO.output(26, GPIO.LOW)
+    #     GPIO.output(24, GPIO.LOW)
+    #     GPIO.output(12, GPIO.LOW)
+    #     GPIO.output(27, GPIO.LOW)
+    #     GPIO.output(25, GPIO.LOW)
 
 # GPIO.cleanup()
