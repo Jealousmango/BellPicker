@@ -41,7 +41,7 @@ def turnOffLeds():
 def demoMode():
     turnOffLeds()
     for i in range(0, len(contestants)):
-        GPIO.output(i, GPIO.HIGH)
+        GPIO.output([i], GPIO.HIGH)
         print("Blinking!")
         time.sleep(.5)
         GPIO.output(i, GPIO.LOW)
