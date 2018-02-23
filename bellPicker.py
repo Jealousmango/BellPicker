@@ -125,26 +125,26 @@ if slack_client.rtm_connect() and selectionInProgress == False:
     print ("Connected!")
 
     while True:
-		# Listen for button press.
-		input_state = GPIO.input(4)
-		if input_state == False:
-			print("Button has been pressed.")
-			selectionInProgress = True
-			main()
-			print("Nap")
-			time.sleep(10)
-			# end = True
-			# Shut it down.
-			turnOffLeds()
-			contestants = [12, 18, 24, 25, 26, 27]
-		else:
-			GPIO.output(18, GPIO.LOW)
-			GPIO.output(26, GPIO.LOW)
-			GPIO.output(24, GPIO.LOW)
-			GPIO.output(12, GPIO.LOW)
-			GPIO.output(27, GPIO.LOW)
-			GPIO.output(25, GPIO.LOW)
-		
+        # Listen for button press.
+        input_state = GPIO.input(4)
+        if input_state == False:
+            print("Button has been pressed.")
+            selectionInProgress = True
+            main()
+            print("Nap")
+            time.sleep(10)
+            # end = True
+            # Shut it down.
+            turnOffLeds()
+            contestants = [12, 18, 24, 25, 26, 27]
+        else:
+            GPIO.output(18, GPIO.LOW)
+            GPIO.output(26, GPIO.LOW)
+            GPIO.output(24, GPIO.LOW)
+            GPIO.output(12, GPIO.LOW)
+            GPIO.output(27, GPIO.LOW)
+            GPIO.output(25, GPIO.LOW)
+        
         for message in slack_client.rtm_read():
             if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
                 print("Message received: %s" % json.dumps(message, indent=2))
