@@ -83,7 +83,7 @@ def chooseWinner():
     # GPIO.output(winner, GPIO.HIGH)
     for blinks in range(0, 10):
         GPIO.output(winner, GPIO.HIGH)
-        print("Blinking!")
+        print("Blinking %s", winnerHandle)
         time.sleep(1)
         GPIO.output(winner, GPIO.LOW)
         time.sleep(1)
@@ -131,7 +131,7 @@ if slack_client.rtm_connect() and selectionInProgress == False:
             print("Button has been pressed.")
             selectionInProgress = True
             main()
-            print("Nap")
+            print("Job's done!")
             time.sleep(10)
             # end = True
             # Shut it down.
