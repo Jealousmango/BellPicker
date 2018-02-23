@@ -43,7 +43,7 @@ def demoMode():
         else:
             continue
 
-if mode = "demo":
+if mode == "demo":
     demoMode()
 else:
     continue
