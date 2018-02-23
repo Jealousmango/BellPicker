@@ -38,20 +38,20 @@ def turnOffLeds():
     GPIO.output(25, GPIO.LOW)
 
 # Playing around with a demo mode.
-def demoMode():
-    turnOffLeds()
-    for i in range(0, len(contestants)):
-        GPIO.output(contestants[i], GPIO.HIGH)
-        print("Blinking!")
-        time.sleep(.5)
-        GPIO.output(contestants[i], GPIO.LOW)
-        time.sleep(.5)
-    demoMode()
+# def demoMode():
+#     turnOffLeds()
+#     for i in range(0, len(contestants)):
+#         GPIO.output(contestants[i], GPIO.HIGH)
+#         print("Blinking!")
+#         time.sleep(.5)
+#         GPIO.output(contestants[i], GPIO.LOW)
+#         time.sleep(.5)
+#     demoMode()
 
-if mode == "demo":
-    demoMode()
-else:
-    print("No demo input.")
+# if mode == "demo":
+#     demoMode()
+# else:
+#     print("No demo input.")
 
 
 # Connect slack bot.
