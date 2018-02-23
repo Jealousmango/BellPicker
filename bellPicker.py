@@ -27,7 +27,7 @@ end = False
 # Hold all GPIO pins used in a list.
 contestants = [12, 18, 24, 25, 26, 27]
 
-mode = str.input()
+mode = "demo"
 
 # Playing around with a demo mode.
 def demoMode():
