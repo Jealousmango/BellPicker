@@ -44,7 +44,7 @@ def demoMode():
         GPIO.output(contestants[i], GPIO.HIGH)
         print("Blinking!")
         time.sleep(.5)
-        GPIO.output(i, GPIO.LOW)
+        GPIO.output(contestants[i], GPIO.LOW)
         time.sleep(.5)
         if i == len(contestants):
             i = 0
