@@ -125,6 +125,24 @@ if slack_client.rtm_connect() and selectionInProgress == False:
     print ("Connected!")
 
     while True:
+        # Listen for "ding" message.
+        for message in slack_client.rtm_read():
+            if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
+                print("Message received: %s" % json.dumps(message, indent=2))
+                message_text = message['text']. \
+                    split("<@%s>" % slack_user_id)[1]. \
+                    strip()
+
+                if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
+                    slack_client.api_call(
+                        "chat.postMessage",
+                        channel="alert",
+                        text="Selecting a winner...",
+                        as_user=True)
+                    contestants = [12, 18, 24, 25, 26, 27]
+                    selectionInProgress = True
+                    main()
+
         # Listen for button press.
         input_state = GPIO.input(4)
         if input_state == False:
@@ -144,23 +162,6 @@ if slack_client.rtm_connect() and selectionInProgress == False:
             GPIO.output(12, GPIO.LOW)
             GPIO.output(27, GPIO.LOW)
             GPIO.output(25, GPIO.LOW)
-        
-        for message in slack_client.rtm_read():
-            if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
-                print("Message received: %s" % json.dumps(message, indent=2))
-                message_text = message['text']. \
-                    split("<@%s>" % slack_user_id)[1]. \
-                    strip()
-
-                if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
-                    slack_client.api_call(
-                        "chat.postMessage",
-                        channel="alert",
-                        text="Selecting a winner...",
-                        as_user=True)
-                    contestants = [12, 18, 24, 25, 26, 27]
-                    selectionInProgress = True
-                    main()
 """
 while True:
     # Listen for button press.
