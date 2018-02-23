@@ -23,11 +23,31 @@ GPIO.setup(26, GPIO.OUT) # Orange
 GPIO.setup(27, GPIO.OUT) # Pink
 
 # Bool to let the program know when to end.
-# end = False
+end = False
 # Hold all GPIO pins used in a list.
 contestants = [12, 18, 24, 25, 26, 27]
-# Keep script from accepting more than one input at a time.
-selectionInProgress = False
+
+mode = input()
+
+# Playing around with a demo mode.
+def demoMode():
+    turnOffLeds()
+    for i in range(0, len(contestants)):
+        GPIO.output(i, GPIO.HIGH)
+        print("Blinking!")
+        time.sleep(.5)
+        GPIO.output(i, GPIO.LOW)
+        time.sleep(.5)
+        if i == len(contestants):
+            i = 0
+        else:
+            continue
+
+if mode = "demo":
+    demoMode()
+else:
+    continue
+
 
 # Connect slack bot.
 slack_client = SlackClient(config.api_key)
@@ -46,11 +66,7 @@ winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth"
 
 def main():
     turnOffLeds()
-    selectionInProgress = True
     chooseWinner()
-    # Finished selecting a winner. Start accepting input again.
-    selectionInProgress = False
-    turnOffLeds()
 
 def turnOffLeds():
     GPIO.output(24, GPIO.LOW)
@@ -59,7 +75,7 @@ def turnOffLeds():
     GPIO.output(12, GPIO.LOW)
     GPIO.output(27, GPIO.LOW)
     GPIO.output(25, GPIO.LOW)
-turnOffLeds()
+
 def chooseWinner():
     print('Choosing winner...')
     # Amount of time to sleep between LEDs.
@@ -85,7 +101,7 @@ def chooseWinner():
     # GPIO.output(winner, GPIO.HIGH)
     for blinks in range(0, 10):
         GPIO.output(winner, GPIO.HIGH)
-        print("Blinking - ", winnerHandle)
+        print("Blinking!")
         time.sleep(1)
         GPIO.output(winner, GPIO.LOW)
         time.sleep(1)
@@ -123,53 +139,32 @@ for user in user_list.get("members"):
     if user.get("name") == "bellman":
         slack_user_id = user.get("id")
         break
-if slack_client.rtm_connect() and selectionInProgress == False:
+if slack_client.rtm_connect():
     print ("Connected!")
 
     while True:
-        # Listen for button press.
-        input_state = GPIO.input(4)
-        if input_state == False:
-            print("Button has been pressed.")
-            selectionInProgress = True
-            main()
-            print("Job's done!")
-            time.sleep(10)
-            # end = True
-            # Shut it down.
-            turnOffLeds()
-            contestants = [12, 18, 24, 25, 26, 27]
-        else:
-            GPIO.output(18, GPIO.LOW)
-            GPIO.output(26, GPIO.LOW)
-            GPIO.output(24, GPIO.LOW)
-            GPIO.output(12, GPIO.LOW)
-            GPIO.output(27, GPIO.LOW)
-            GPIO.output(25, GPIO.LOW)
-        
-        # for message in slack_client.rtm_read():
-        #     if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
-        #         print("Message received: %s" % json.dumps(message, indent=2))
-        #         message_text = message['text']. \
-        #             split("<@%s>" % slack_user_id)[1]. \
-        #             strip()
+        for message in slack_client.rtm_read():
+            if "text" in message and message["text"].startswith("<@%s>" % slack_user_id):
+                print("Message received: %s" % json.dumps(message, indent=2))
+                message_text = message['text']. \
+                    split("<@%s>" % slack_user_id)[1]. \
+                    strip()
 
-        #         if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
-        #             slack_client.api_call(
-        #                 "chat.postMessage",
-        #                 channel="alert",
-        #                 text="Selecting a winner...",
-        #                 as_user=True)
-        #             contestants = [12, 18, 24, 25, 26, 27]
-        #             main()
-"""
+                if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
+                    slack_client.api_call(
+                        "chat.postMessage",
+                        channel="alert",
+                        text="Selecting a winner...",
+                        as_user=True)
+                    main()
+# while end != True:
 while True:
     # Listen for button press.
     input_state = GPIO.input(4)
     if input_state == False:
         print("Button has been pressed.")
         main()
-        print("Nap")
+        print("Jobs done.")
         time.sleep(10)
         # end = True
         # Shut it down.
@@ -184,4 +179,3 @@ while True:
         GPIO.output(25, GPIO.LOW)
 
 # GPIO.cleanup()
-"""
