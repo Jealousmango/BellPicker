@@ -29,6 +29,14 @@ contestants = [12, 18, 24, 25, 26, 27]
 
 mode = "demo"
 
+def turnOffLeds():
+    GPIO.output(24, GPIO.LOW)
+    GPIO.output(18, GPIO.LOW)
+    GPIO.output(26, GPIO.LOW)
+    GPIO.output(12, GPIO.LOW)
+    GPIO.output(27, GPIO.LOW)
+    GPIO.output(25, GPIO.LOW)
+
 # Playing around with a demo mode.
 def demoMode():
     turnOffLeds()
@@ -67,14 +75,6 @@ winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth"
 def main():
     turnOffLeds()
     chooseWinner()
-
-def turnOffLeds():
-    GPIO.output(24, GPIO.LOW)
-    GPIO.output(18, GPIO.LOW)
-    GPIO.output(26, GPIO.LOW)
-    GPIO.output(12, GPIO.LOW)
-    GPIO.output(27, GPIO.LOW)
-    GPIO.output(25, GPIO.LOW)
 
 def chooseWinner():
     print('Choosing winner...')
