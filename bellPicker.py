@@ -46,10 +46,7 @@ def demoMode():
         time.sleep(.5)
         GPIO.output(contestants[i], GPIO.LOW)
         time.sleep(.5)
-        if i == len(contestants):
-            i = 0
-        else:
-            continue
+    demoMode()
 
 if mode == "demo":
     demoMode()
