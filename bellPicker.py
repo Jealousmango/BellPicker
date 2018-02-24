@@ -6,6 +6,9 @@ import json
 from slackclient import SlackClient
 import config
 import sys
+from gpiozero import Buzzer
+
+buzzer = Buzzer(19)
 
 # Prevent python from generating .pyc files.
 sys.dont_write_bytecode = True
@@ -147,6 +150,7 @@ if slack_client.rtm_connect():
         input_state = GPIO.input(4)
         if input_state == False:
             print("Button has been pressed.")
+            buzzer.beep(on_time = .03, n = 3, background = False)
             main()
             print("Jobs done.")
             time.sleep(10)
