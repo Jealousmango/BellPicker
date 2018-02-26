@@ -16,5 +16,5 @@ def main():
         if (buttonHandler.listenForPress()):
             ledHandler.turnOnLeds()
         else:
-            ledHandler.turnOffLeds
+            ledHandler.turnOffLeds()
 main()    
