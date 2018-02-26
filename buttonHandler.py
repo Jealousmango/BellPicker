@@ -10,3 +10,6 @@ def listenForPress():
     input_state = GPIO.input(4)
     if input_state == False:
         print("Button has been pressed.")
+        return True
+    else:
+        return False

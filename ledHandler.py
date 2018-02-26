@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import buttonHandler
+# import buttonHandler
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
