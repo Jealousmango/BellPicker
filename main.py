@@ -13,7 +13,8 @@ def main():
     ledHandler.turnOffLeds()
     # TODO: change this to be called from user input.
     while True:
-        if (buttonHandler.listenForPress()):
+        buttonPressed = buttonHandler.listenForPress()
+        if (buttonPressed):
             ledHandler.turnOnLeds()
         else:
             ledHandler.turnOffLeds()
