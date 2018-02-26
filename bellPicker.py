@@ -1,12 +1,14 @@
-import RPi.GPIO as GPIO
-import time
+import json
 import random
 import re
-import json
-from slackclient import SlackClient
-import config
 import sys
+import time
+
 from gpiozero import Buzzer
+from slackclient import SlackClient
+
+import config
+import RPi.GPIO as GPIO
 
 buzzer = Buzzer(19)
 
