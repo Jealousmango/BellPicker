@@ -75,7 +75,7 @@ fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0L
 # Used to ping winner.
 winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
 # winnerNames = ["@jealousmango", "@krysco","@jealousmango", "@krysco","@jealousmango", "@krysco"]
-
+contestants = [12, 18, 24, 25, 26, 27]
 def main():
     contestants = [12, 18, 24, 25, 26, 27]
     turnOffLeds()
