@@ -122,8 +122,8 @@ def chooseWinner():
 
     slack_client.api_call(
         "chat.postMessage",
-        channel = "general",
-        # channel = "alert",
+        # channel = "general",
+        channel = "alert",
         text = winningMessage,
         as_user = True,
         link_names = True)
