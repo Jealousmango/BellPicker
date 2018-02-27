@@ -12,8 +12,8 @@ def listenForPress():
     if input_state == False:
         print("Button has been pressed.")
         sleep(.05)
-        return False
+        return True
     else:
         print("Button is not pressed.")
         sleep(.05)
-        return True
+        return False
