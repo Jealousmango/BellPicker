@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+from time import sleep
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -10,6 +11,9 @@ def listenForPress():
     input_state = GPIO.input(4)
     if input_state == False:
         print("Button has been pressed.")
-        return True
-    else:
+        sleep(.05)
         return False
+    else:
+        print("Button is not pressed.")
+        sleep(.05)
+        return True

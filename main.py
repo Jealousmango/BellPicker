@@ -7,9 +7,8 @@ import time
 # Prevent python from generating .pyc files.
 sys.dont_write_bytecode = True
 
-contestants = [12, 18, 24, 25, 26, 27]
-
 def main():
+    contestants = [12, 18, 24, 25, 26, 27]
     ledHandler.turnOffLeds()
     # TODO: change this to be called from user input.
     while True:
