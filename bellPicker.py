@@ -58,8 +58,8 @@ def turnOffLeds():
 
 
 # Connect slack bot.
-# slack_client = SlackClient(config.api_key)
-slack_client = SlackClient(config.api_key_bottington)
+slack_client = SlackClient(config.api_key)
+# slack_client = SlackClient(config.api_key_bottington)
 
 user_list = slack_client.api_call("users.list")
 
@@ -113,6 +113,7 @@ def chooseWinner():
     winningMessage = winnerHandle
     slack_client.api_call(
         "chat.postMessage",
+        # channel = "general",
         channel = "alert",
         text = "The winner has been selected...",
         as_user = True)
@@ -121,7 +122,8 @@ def chooseWinner():
 
     slack_client.api_call(
         "chat.postMessage",
-        channel = "alert",
+        channel = "general",
+        # channel = "alert",
         text = winningMessage,
         as_user = True,
         link_names = True)
@@ -129,12 +131,14 @@ def chooseWinner():
 
     slack_client.api_call(
         "chat.postMessage",
+        # channel = "general",
         channel = "alert",
         text = "You have been chosen!",
         as_user = True)
 
     slack_client.api_call(
         "chat.postMessage",
+        # channel = "general",
         channel = "alert",
         text = fantasticGifs[fantasticGifToPost],
         as_user = True)
@@ -177,7 +181,8 @@ if slack_client.rtm_connect():
                 if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
                     slack_client.api_call(
                         "chat.postMessage",
-                        channel="alert",
+                        # channel = "general",
+                        channel = "alert",
                         text="Selecting a winner...",
                         as_user=True)
                     main()
