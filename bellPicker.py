@@ -32,7 +32,19 @@ GPIO.setup(27, GPIO.OUT) # Pink
 # Hold all GPIO pins used in a list.
 contestants = [12, 18, 24, 25, 26, 27]
 
-# mode = "demo"
+botMode = input('What mode? *default or testing')
+test = 'test'
+
+# if botMode.lower() == test:
+#     print('Test mode.')
+#     channelToAlert = 'general'
+#     winnerNames = ["@jealousmango", "@krysco",
+#                    "@jealousmango", "@krysco", "@jealousmango", "@krysco"]
+# else:
+#     print('Default mode.')
+#     channelToAlert = 'alert'
+#     winnerNames = ["@lizl", "@charles.mitchell", "@shuggard",
+#                    "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
 
 def turnOffLeds():
     GPIO.output(24, GPIO.LOW)
@@ -61,9 +73,9 @@ def turnOffLeds():
 
 # Connect slack bot.
 # slack_client = SlackClient(config.api_key)
-slack_client = SlackClient(config.api_key_bottington)
+# slack_client = SlackClient(config.api_to_use)
 
-user_list = slack_client.api_call("users.list")
+# user_list = slack_client.api_call("users.list")
 
 fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0LEJi",
                 "https://giphy.com/gifs/news-atl-down-MTclfCr4tVgis",
@@ -74,12 +86,29 @@ fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0L
                 "https://giphy.com/gifs/heyarnold-nickelodeon-hey-arnold-26Ff4Ci2RNT1H1zb2"]
 # Used to ping winner.
 # winnerNames = ["@lizl", "@charles.mitchell", "@shuggard", "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
-winnerNames = ["@jealousmango", "@krysco","@jealousmango", "@krysco","@jealousmango", "@krysco"]
+# winnerNames = ["@jealousmango", "@krysco","@jealousmango", "@krysco","@jealousmango", "@krysco"]
+def chooseMode():
+    if botMode.lower() == test:
+        print('Test mode.')
+        global channelToAlert = "general"
+        global winnerNames = ["@jealousmango", "@krysco", "@jealousmango", "@krysco", "@jealousmango", "@krysco"]
+        global api_to_use = config.api_key_bottington
+    else:
+        print('Default mode.')
+        global channelToAlert = 'alert'
+        global winnerNames = ["@lizl", "@charles.mitchell", "@shuggard",
+                    "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
+        global api_to_use = config.api_key
+        global user_list = slack_client.api_call("users.list")
+    # main(winnerNames, channelToAlert, api_to_use, user_list, botMode)
+    main()
 
 def main():
     turnOffLeds()
     chooseWinner()
     turnOffLeds()
+
+slack_client = SlackClient(config.api_to_use)
 
 def chooseWinner():
     print('Choosing winner...')
@@ -114,7 +143,7 @@ def chooseWinner():
     winningMessage = winnerHandle
     slack_client.api_call(
         "chat.postMessage",
-        channel = "general",
+        channel = channelToAlert,
         text = "The winner has been selected...",
         as_user = True)
 
@@ -122,7 +151,7 @@ def chooseWinner():
 
     slack_client.api_call(
         "chat.postMessage",
-        channel = "general",
+        channel = channelToAlert,
         text = winningMessage,
         as_user = True,
         link_names = True)
@@ -130,13 +159,13 @@ def chooseWinner():
 
     slack_client.api_call(
         "chat.postMessage",
-        channel = "general",
+        channel = channelToAlert,
         text = "You must answer the call of duty!",
         as_user = True)
 
     slack_client.api_call(
         "chat.postMessage",
-        channel = "general",
+        channel = channelToAlert,
         text = fantasticGifs[fantasticGifToPost],
         as_user = True)
 
@@ -153,7 +182,7 @@ if slack_client.rtm_connect():
         if input_state == False:
             print("Button has been pressed.")
             buzzer.beep(on_time = .03, n = 3, background = False)
-            main()
+            chooseMode()
             print("Jobs done.")
             time.sleep(10)
             # end = True
@@ -178,9 +207,9 @@ if slack_client.rtm_connect():
                 if re.match(r'.*(ding).*', message_text, re.IGNORECASE):
                     slack_client.api_call(
                         "chat.postMessage",
-                        channel="general",
-                        text="Selecting a winner...",
-                        as_user=True)
+                        channel = channelToAlert,
+                        text = "Selecting a winner...",
+                        as_user = True)
                     main()
 # while end != True:
 # while True:

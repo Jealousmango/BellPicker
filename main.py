@@ -7,6 +7,15 @@ import time
 # Prevent python from generating .pyc files.
 sys.dont_write_bytecode = True
 
+botMode = input('What mode? *default or testing')
+test = 'test'
+
+if botMode.lower() == test:
+    print('Test mode.')
+else:
+    print('Default mode.')
+
+    
 def main():
     contestants = [12, 18, 24, 25, 26, 27]
     ledHandler.turnOffLeds()
