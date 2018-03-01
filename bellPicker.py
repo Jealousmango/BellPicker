@@ -104,7 +104,8 @@ def chooseWinner():
     # Light up the winning pin.
     # GPIO.output(winner, GPIO.HIGH)
     print("Blink mode?")
-    answer = input('Enter Y or N: ')
+
+    answer = str(input('Enter Y or N: '))
     if (answer == "Y"):
 
         for blinks in range(0, 10):
