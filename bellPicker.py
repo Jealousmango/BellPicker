@@ -26,6 +26,12 @@ GPIO.setup(24, GPIO.OUT) # Green
 GPIO.setup(25, GPIO.OUT) # Red
 GPIO.setup(26, GPIO.OUT) # Orange
 GPIO.setup(27, GPIO.OUT) # Pink
+global channelToAlert
+global channelToAlert
+global winnerNames
+global api_to_use
+global user_list
+
 
 # Bool to let the program know when to end.
 # end = False
@@ -90,16 +96,17 @@ fantasticGifs = ["https://giphy.com/gifs/excited-the-office-celebrate-Is1O1TWV0L
 def chooseMode():
     if botMode.lower() == test:
         print('Test mode.')
-        global channelToAlert = "general"
-        global winnerNames = ["@jealousmango", "@krysco", "@jealousmango", "@krysco", "@jealousmango", "@krysco"]
-        global api_to_use = config.api_key_bottington
+        channelToAlert = "general"
+        winnerNames = ["@jealousmango", "@krysco", "@jealousmango", "@krysco", "@jealousmango", "@krysco"]
+        api_to_use = config.api_key_bottington
     else:
         print('Default mode.')
-        global channelToAlert = 'alert'
-        global winnerNames = ["@lizl", "@charles.mitchell", "@shuggard",
+        channelToAlert = 'alert'
+        winnerNames = ["@lizl", "@charles.mitchell", "@shuggard",
                     "@hubert-j-farnsworth", "@qwerji", "@eddrakee"]
-        global api_to_use = config.api_key
-        global user_list = slack_client.api_call("users.list")
+        api_to_use = config.api_key
+    slack_client = SlackClient(api_to_use)
+    user_list = slack_client.api_call("users.list")
     # main(winnerNames, channelToAlert, api_to_use, user_list, botMode)
     main()
 
@@ -108,7 +115,7 @@ def main():
     chooseWinner()
     turnOffLeds()
 
-slack_client = SlackClient(config.api_to_use)
+# slack_client = SlackClient(config.api_to_use)
 
 def chooseWinner():
     print('Choosing winner...')
@@ -168,6 +175,10 @@ def chooseWinner():
         channel = channelToAlert,
         text = fantasticGifs[fantasticGifToPost],
         as_user = True)
+
+
+slack_client = SlackClient(api_to_use)
+user_list = slack_client.api_call("users.list")
 
 for user in user_list.get("members"):
     if user.get("name") == "bottington":
