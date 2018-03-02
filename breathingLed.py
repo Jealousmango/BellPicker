@@ -1,7 +1,7 @@
 import time
 import RPi.GPIO as GPIO
 
-LedPin = 12
+LedPin = 18
 
 def setup():
     global p
@@ -40,3 +40,4 @@ if __name__ == '__main__':     # Program start from here
 		loop()
 	# When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
 	except KeyboardInterrupt:
+		destroy()

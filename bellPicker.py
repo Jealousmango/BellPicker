@@ -105,19 +105,19 @@ def chooseWinner():
         timeToWait = timeToWait * 1.25
     # Light up the winning pin.
     # GPIO.output(winner, GPIO.HIGH)
-    print("Blink mode?")
+#    print("Blink mode?")
 
-    answer = str(input('Enter Y or N: '))
-    if (answer == "Y"):
-
-        for blinks in range(0, 10):
-            GPIO.output(winner, GPIO.HIGH)
-            print("Blinking!")
-            time.sleep(1)
-            GPIO.output(winner, GPIO.LOW)
-            time.sleep(1)
-        else:
-            print("Starting default mode.")
+#    answer = str(input('Enter Y or N: '))
+#    if (answer == "Y"):
+#
+#        for blinks in range(0, 10):
+#            GPIO.output(winner, GPIO.HIGH)
+#            print("Blinking!")
+#            time.sleep(1)
+#            GPIO.output(winner, GPIO.LOW)
+#            time.sleep(1)
+#        else:
+#            print("Starting default mode.")
     GPIO.output(winner, GPIO.HIGH)
     winningMessage = winnerHandle
     slack_client.api_call(
