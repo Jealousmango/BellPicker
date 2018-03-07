@@ -21,4 +21,5 @@ time.sleep(1)
 pin_12.turnOnLeds(pin_12.pin)
 time.sleep(1)
 
+print(pin_12.color, pin_12.user_name, pin_12.pin)
 print(pin_12)
