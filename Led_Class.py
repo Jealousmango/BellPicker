@@ -12,9 +12,9 @@ class Led(object):
         GPIO.setup(pin, GPIO.OUT)
 
     # Call this method output LOW on the pin passed.
-    def turnOffLeds(self, pin):
+    def turnOffLed(self, pin):
         GPIO.output(pin, GPIO.LOW)
 
     # Call this method output HIGH on the pin passed.
-    def turnOnLeds(self, pin):
+    def turnOnLed(self, pin):
         GPIO.output(pin, GPIO.HIGH)
