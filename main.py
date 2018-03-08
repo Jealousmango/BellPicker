@@ -48,13 +48,13 @@ def main():
 
 def turn_off_all_leds():
     for x in range(0, len(contestants)):
-        x.turnOffLed(x)
+        contestants[x].turnOffLed(x.pin)
     print("All LEDs turned off!")
 
 
 def turn_on_all_leds():
     for x in range(0, len(contestants)):
-        x.turnOnLed(x)
+        contestants[x].turnOnLed(x.pin)
     print("All LEDs turned on!")
 
 # pin_12.turnOffLed(pin_12.pin)
