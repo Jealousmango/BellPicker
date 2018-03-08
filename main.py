@@ -70,5 +70,6 @@ def turn_on_all_leds():
 # pin_12.turnOnLed(pin_12.pin)
 # time.sleep(1)
 
+main()
 print(pin_12.color, pin_12.user_name, pin_12.pin)
 print(pin_12)
