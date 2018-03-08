@@ -39,12 +39,12 @@ def main():
     turn_off_all_leds()
     time.sleep(1)
     turn_on_all_leds()
+    time.sleep(1)
     turn_off_all_leds()
     time.sleep(1)
     turn_on_all_leds()
-    turn_off_all_leds()
     time.sleep(1)
-    turn_on_all_leds()
+    turn_off_all_leds()
 
 def turn_off_all_leds():
     for x in range(0, len(contestants)):
