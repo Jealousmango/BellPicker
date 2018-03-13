@@ -1,4 +1,5 @@
 import Led_Class
+import Button_Class
 import time
 import RPi.GPIO as GPIO
 
@@ -6,7 +7,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
 # Uncomment for home testing.
-
 pin_12 = Led_Class.Led("ultraviolet", "@Jealousmango", 12)
 pin_18 = Led_Class.Led("ultraviolet", "@Krysco", 18)
 pin_24 = Led_Class.Led("ultraviolet", "@Jealousmango", 24)
@@ -36,15 +36,24 @@ contestants = [pin_12, pin_18, pin_24, pin_25, pin_26, pin_27]
 
 def main():
     print("Running")
-    turn_off_all_leds()
-    time.sleep(1)
-    turn_on_all_leds()
-    time.sleep(1)
-    turn_off_all_leds()
-    time.sleep(1)
-    turn_on_all_leds()
-    time.sleep(1)
-    turn_off_all_leds()
+    # contestants = [pin_12, pin_18, pin_24, pin_25, pin_26, pin_27]
+    button = Button_Class.Button(4)
+    while button.listenForButtonPress == True:
+        turn_off_all_leds()
+    else:
+        print("Let there be light!")
+        turn_on_all_leds()
+    main()
+
+        # turn_off_all_leds()
+        # time.sleep(1)
+        # turn_on_all_leds()
+        # time.sleep(1)
+        # turn_off_all_leds()
+        # time.sleep(1)
+        # turn_on_all_leds()
+        # time.sleep(1)
+        # turn_off_all_leds()
 
 def turn_off_all_leds():
     for x in range(0, len(contestants)):
