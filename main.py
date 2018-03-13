@@ -38,12 +38,13 @@ def main():
     print("Running")
     # contestants = [pin_12, pin_18, pin_24, pin_25, pin_26, pin_27]
     button = Button_Class.Button(4)
-    while button.listenForButtonPress == True:
+    while button.listenForButtonPress(4) == True:
         turn_off_all_leds()
     else:
         print("Let there be light!")
         turn_on_all_leds()
-    main()
+        time.sleep(.1)
+        main()
 
         # turn_off_all_leds()
         # time.sleep(1)
@@ -58,7 +59,7 @@ def main():
 def turn_off_all_leds():
     for x in range(0, len(contestants)):
         contestants[x].turnOffLed(contestants[x].pin)
-    print("All LEDs turned off!")
+    
 
 
 def turn_on_all_leds():
