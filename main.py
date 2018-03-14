@@ -34,15 +34,19 @@ pin_27.setup_led(pin_27.pin)
 contestants = [pin_12, pin_18, pin_24, pin_25, pin_26, pin_27]
 
 bottington = SlackBot_Class.SlackBot("bottington")
-bellman = SlackBot_Class.SlackBot("bellman")
+# bellman = SlackBot_Class.SlackBot("bellman")
 
 # contestants = [12, 18, 24, 25, 26, 27]
 
 def main():
+    announce_bot = "Connected SlackBot: ", bottington.bot_name
     print("Running")
+
+    bottington.send_message(announce_bot, "general")
     # contestants = [pin_12, pin_18, pin_24, pin_25, pin_26, pin_27]
     button = Button_Class.Button(4)
     bottington.connect_to_slack(bottington.bot_name)
+
     # bellman.connect_to_slack(bellman.bot_name)
     while button.listenForButtonPress(4) == True:
         turn_off_all_leds()
