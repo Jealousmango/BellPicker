@@ -18,8 +18,8 @@ class Handler(object):
             # bottington = SlackBot_Class.SlackBot(bot_name)
         else:
             print("Not connected!")
-
-    def ReturnBot(self, slack_client):
+            
+    def ReturnBot(self, slack_bot):
         slack_bot = SlackBot_Class.SlackBot(self.bot_name)
         print("Returning connected bot.")
         return slack_bot

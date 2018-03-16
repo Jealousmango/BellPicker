@@ -5,10 +5,10 @@ import config
 import SlackBot_Handler 
 
 class SlackBot(object):
-    slack_client = SlackClient(config.api_key_bottington)
+    # slack_client = SlackClient(config.api_key_bottington)
     def __init__(self, bot_name):
-        slack_client = SlackClient(config.api_key_bottington)
-        super(SlackBot, self).__init__()
+        # slack_client = SlackClient(config.api_key_bottington)
+        # super(SlackBot, self).__init__()
         self.bot_name = bot_name
         if bot_name == "bottington":
                 slack_client = SlackClient(config.api_key_bottington)
@@ -47,7 +47,6 @@ class SlackBot(object):
                 channel=channel,
                 text=message_contents,
                 as_user=True)
-
         # def connect_to_slack(self, bot_name):
         #     if bot_name == "bottington":
         #         slack_client = SlackClient(config.api_key_bottington)
